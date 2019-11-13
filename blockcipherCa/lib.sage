@@ -57,6 +57,6 @@ def StatS():
         for x in B:
             t = S(x) + S(x+f)
             nt = b2n(t)
-            cnt[nt,nf] = cnt[nt,nf]+1
+            cnt[nf,nt] = cnt[nf,nt]+1
     return cnt
         

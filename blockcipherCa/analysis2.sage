@@ -1,9 +1,12 @@
-k1 = n2b(11)
-k2 = n2b(3)
-k3 = n2b(9)
+load("lib.sage")
+load("chiffre2.sage")
 
-delta = n2b(15)
-diff = n2b(13)
+k1 = n2b(0xb)
+k2 = n2b(0x3)
+k3 = n2b(0x9)
+
+delta = n2b(0xf)
+diff = n2b(0xd)
 
 encd = {}
 encinvd = {}
@@ -38,3 +41,33 @@ def delta_out(m,k):
     _, _, _, _, c1 = enc2(m, k1, k2, k)
     _, _, _, _, c2 = enc2(m+delta, k1, k2, k)
     print('m={0:x}, k={1:x}, delta_c={2:x}'.format(b2n(m), b2n(k), b2n(c1+c2)))
+
+
+def find_candidate(m):
+    _, _, w1, _, c1 = enc2(m, k1, k2, k3)
+    _, _, w2, _, c2 = enc2(m+delta, k1, k2, k3)
+    for k in B:
+        ds = Sinv(c1+k) + Sinv(c2+k)
+        if ds == diff:
+            print('Kandidat: {:x} ({})'.format(b2n(k), ds == w1+w2) )
+
+            
+def candidate_k2(m,k):
+    _, _, _, _, c1o = enc2(m, k1, k2, k3)
+    _, _, _, _, c2o = enc2(m+delta, k1, k2, k3)
+    c1 = Sinv(c1o+k)
+    c2 = Sinv(c2o+k)
+    for k in B:
+        v11 = c1 + k
+        v22 = c2 + k
+        u11 = Sinv(v11)
+        u22 = Sinv(v22)
+        if u11 + u22 == delta:
+            print('candidate for k2: ' + b2nh(k))
+
+
+def compute_k1(m,k2k,k3k):
+    _, _, _, _, c1o = enc2(m, k1, k2, k3)
+    k1k = Sinv(Sinv(c1o + k3k) + k2k) + m 
+    print('candidate for k1: ' + b2nh(k1k))
+    
