@@ -1,0 +1,40 @@
+digraph G {
+    splines=true
+    sep=1
+    node [shape="record"];
+ 
+    in1  [label="<a10>a10 | <a11>a11 | <a12>a12 | <a13>a13 | 
+    <a20>a20 | <a21>a21 | <a22>a22 | <a23>a23 | 
+    <a30>a30 | <a31>a31 | <a32>a32 | <a33>a33 | 
+    <a40>a40 | <a41>a41 | <a42>a42 | <a43>a43", pos="0,2!"];  
+    out1 [label="<b10>b10 | <b11>b11 | <b12>b12 | <b13>b13 | 
+    <b20>b20 | <b21>b21 | <b22>b22 | <b23>b23 | 
+    <b30>b30 | <b31>b31 | <b32>b32 | <b33>b33 | 
+    <b40>b40 | <b41>b41 | <b42>b42 | <b43>b43", pos="0,0!"];  
+
+
+    edge[color="green"]
+    "in1":a13 -> "out1":b13
+    "in1":a12 -> "out1":b23
+    "in1":a11 -> "out1":b33
+    "in1":a10 -> "out1":b43
+
+    edge[color="blue"]
+    "in1":a23 -> "out1":b12
+    "in1":a22 -> "out1":b22
+    "in1":a21 -> "out1":b32
+    "in1":a20 -> "out1":b42
+
+    edge[color="red"]
+    "in1":a33 -> "out1":b11
+    "in1":a32 -> "out1":b21
+    "in1":a31 -> "out1":b31
+    "in1":a30 -> "out1":b41
+
+    edge[color="black"]
+    "in1":a43 -> "out1":b10
+    "in1":a42 -> "out1":b20
+    "in1":a41 -> "out1":b30
+    "in1":a40 -> "out1":b40
+
+}
