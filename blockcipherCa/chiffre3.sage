@@ -1,3 +1,5 @@
+load("lib.sage")
+
 def enc3(m, k1, k2, k3, k4):
     x = S(S(m+k1)+k2)
     y = x + k3
@@ -16,6 +18,8 @@ def S2_stat(n):
 
 def attack3(N, k1, k2, k3, k4, delta, diff):
     '''
+    Here delta = 0xf and diff = 0xc
+    
     Do N attempts.
     Choose a block m, encrypt m and m + delta to c1 and c2.
     For every guessed key k4, compute y1 and y2.
@@ -43,8 +47,10 @@ def attack3(N, k1, k2, k3, k4, delta, diff):
 
 def attack3A(k1, k2, k3, k4, delta, diff):
     '''
-    Do N attempts.
-    Choose a block m, encrypt m and m + delta to c1 and c2.
+    Here delta = 0xf and diff = 0xc
+
+    Guess a key k4 = ki.
+    For all blocks m, encrypt m and m + delta to c1 and c2.
     For every guessed key k4, compute y1 and y2.
     If y1 + y2 == diff, k4 is a candidate for the correct
     key, because diff is to occur with prob 15/64 as
@@ -53,13 +59,12 @@ def attack3A(k1, k2, k3, k4, delta, diff):
     '''
 
     stat = [0 for i in range(16)]
-
-    for m in B:
-        _,y1,_,c1 = enc3(m, k1, k2, k3, k4)
-        _,y2,_,c2 = enc3(m+delta, k1, k2, k3, k4)
-
-        for ki in range(16):
-            k = n2b(ki)
+    
+    for ki in range(16):
+        k = n2b(ki)
+        for m in B:
+            _,y1,_,c1 = enc3(m, k1, k2, k3, k4)
+            _,y2,_,c2 = enc3(m+delta, k1, k2, k3, k4)
             y1 = Sinv(k+c1)
             y2 = Sinv(k+c2)
             if y1+y2 == diff:

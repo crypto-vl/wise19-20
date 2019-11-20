@@ -36,8 +36,7 @@ def string2b(s):
     Take a string of four hexadecimal characters and return them as
     four elements of B
     '''
-    return n2b(int(s[0],16)), n2b(int(s[1],16)), n2b(int(s[2],16)),
-    n2b(int(s[3],16))
+    return n2b(int(s[0],16)), n2b(int(s[1],16)), n2b(int(s[2],16)), n2b(int(s[3],16))
 
 def b2string(b1, b2, b3, b4):
     '''
