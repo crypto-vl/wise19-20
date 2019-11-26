@@ -71,3 +71,19 @@ def attack3A(k1, k2, k3, k4, delta, diff):
                 stat[ki]+=1
     return stat, n2b(stat.index(max(stat)))
 
+def problem(m,k):
+    return(S(S(m)+k) + S(S(m+B([1,1,1,1]))+k))
+
+def two_round():
+    '''
+    We consider m->S(m)->S(m)+k->S(S(m)+k)
+    '''
+    cnt = matrix(16)
+    for k in B:
+        nk= b2n(k)
+        for m in B:
+            x = problem(m,k)
+            nx = b2n(x)
+            cnt[nk,nx]+=1
+    return cnt
+        
